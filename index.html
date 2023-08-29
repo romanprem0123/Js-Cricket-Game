@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head><title>cricket game</title>
+</head>
+<body>
+	<!-- game -->
+	
+	<h2> <span>player-1</span>:<span id="player1-score">0</span></h2>
+	<h2> <span>player-2</span>:<span id="player2-score">0</span></h2>
+	<button id="play-btn">play</button>
+	<button id="reset-btn">reset</button>
+	<h2 id="score"></h2>
+<script>
+
+	var	player1element = document.getElementById("player1-score"),
+		player2element = document.getElementById("player2-score"),
+		playbtn = document.getElementById("play-btn"),
+		resetbtn = document.getElementById("reset-btn"),
+		playerScore = document.getElementById("score"),
+		player1score = 0,
+		player2score = 0,
+		batting = "player1";
+
+	function randomNum(){
+		let randomNumber = Math.random();
+		randomNumber*=10;
+		randomNumber = Math.floor(randomNumber);
+		return randomNumber;
+	}
+	
+	function playGame(){
+	 <!-- run => 0 1 2 3 4 5 = 1 6  7 || 8 || 9 => out -->
+		
+		let run = randomNum();
+		console.log(run);
+		if(run >= 7){
+			if(batting == "player1"){
+				batting ="player2";
+			}
+			else{
+				gameover();
+			}
+		}
+		else{
+			if(batting == "player1"){
+				player1score += run;
+			}
+			else{
+				player2score += run;
+			}
+			updatefun();
+		}
+		
+	}
+	
+	function updatefun(){
+	//update player score 
+		player1element.innerHTML = player1score;
+		player2element.innerHTML = player2score;
+		
+		if(batting == "player2"){
+			if(player2score > player1score){
+				gameover();
+			}
+		}
+		
+	}
+	//check player  won or lose 
+	function gameover(){
+	
+		if(player1score > player2score){
+			console.log("player1 won");
+			playerScore.innerHTML= "player-1 won";
+		}
+		else if(player1score < player2score){
+			console.log("player2 won");
+			playerScore.innerHTML= "player-2 won";
+		}
+		else{
+			playerScore.innerHTML="match Tie";
+		}
+	
+	}
+	
+	function resetfun(){
+		player1score = 0;
+		player2score = 0;
+		playerScore.innerHTML = " ";
+		batting = "player1";
+		updatefun();
+	}
+	
+	playbtn.addEventListener("click",playGame);
+	resetbtn.addEventListener("click",resetfun);
+
+</script>
+</body>
+</html>
